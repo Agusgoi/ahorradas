@@ -58,7 +58,7 @@
     <!-- End Header -->
 
     <!-- Balance Section -->
-    <section class="section is-large">
+    <section class="section is-medium is-hidden">
         <div class="container">
             <div class="columns">
                 <div class="column is-4 ">
@@ -83,7 +83,6 @@
                             <p class="is-clickable">Ocultar filtros</p>
                         </div>
                         <div class="field has-text-weight-bold">
-
                             <div class="control is-flex is-flex-direction-column">
                                 <label class="pb-1">Tipo</label>
                                 <div class="select is-fullwidth">
@@ -102,7 +101,7 @@
                                         <option>Comida</option>
                                         <option>Servicios</option>
                                         <option>Salidas</option>
-                                        <option>Educacion</option>
+                                        <option>Educación</option>
                                         <option>Transporte</option>
                                     </select>
                                 </div>
@@ -117,7 +116,7 @@
                                 <label class="pb-1 pt-3">Ordenar por</label>
                                 <div class="select is-fullwidth pb-6">
                                     <select>
-                                        <option>Mas reciente</option>
+                                        <option>Más reciente</option>
                                         <option>Menos reciente</option>
                                         <option>Mayor monto</option>
                                         <option>Menor monto</option>
@@ -141,49 +140,57 @@
                             <h3 class="is-size-3 pt-3">Sin Resultados</h3>
                             <p class="is-size-5 pt-2">Cambia los filtros o agrega operaciones</p>
                         </div>
-                        <div class="field">
-                            <h1>Nueva Operacion</h1>
-                            <div class="control is-flex is-flex-direction-column">
-                                <label class="pb-1">Descripcion</label>
-                                <input class="input" type="text" name="" id="">
-                            </div>
-                            <div class="control is-flex is-flex-direction-column">
-                                <label class="pb-1">Monto</label>
-                                <textarea class="textarea" type="text" name="" id="">
-                            </div>
-
-                            <div class="control is-flex is-flex-direction-column">
-                                <label class="pb-1">Tipo</label>
-                                <div class="select is-fullwidth">
-                                    <select>
-                                        <option>Gasto</option>
-                                        <option>Ganancia</option>
-                                    </select>
-        </div>
-    </div>
-    <div class="control is-flex is-flex-direction-column">
-        <label class="pb-1 pt-3">Categoria</label>
-        <div class="select is-fullwidth">
-            <select>
-                <option>Comida</option>
-                <option>Servicios</option>
-                <option>Salidas</option>
-                <option>Educacion</option>
-                <option>Transporte</option>
-            </select>
-        </div>
-    </div>
-        <div class="control is-flex is-flex-direction-column">
-        <label class="pb-1 pt-3">Fecha</label>
-        <input type="date" class="input is-normal">
-    </div>
-</div>
-
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <!-- End Balance Section -->
 
+    <!-- Operaciones Section -->
+
+    <section class="section is-medium">
+        <div class="box">
+            <h1 class="title">Nueva Operación</h1>
+            <div class="field has-text-weight-bold">
+                <div class="control is-flex is-flex-direction-column">
+                    <label class="pb-1 pt-4">Descripción</label>
+                    <textarea class="textarea" type="text" rows="2"></textarea>
+                </div>
+                <div class="control is-flex is-flex-direction-column">
+                    <label class="pb-1 pt-4">Monto</label>
+                    <input class="input" type="text" name="" id="">
+                </div>
+            <div class="control is-flex is-flex-direction-column">
+                <label class="pb-1 pt-4">Tipo</label>
+                <div class="select is-fullwidth">
+                    <select>
+                        <option>Gasto</option>
+                        <option>Ganancia</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control is-flex is-flex-direction-column">
+                <label class="pb-1 pt-4">Categoría</label>
+                <div class="select is-fullwidth">
+                    <select>
+                        <option>Comida</option>
+                        <option>Servicios</option>
+                        <option>Salidas</option>
+                        <option>Educación</option>
+                        <option>Transporte</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control is-flex is-flex-direction-column">
+                <label class="pb-1 pt-4">Fecha</label>
+                <input type="date" class="input is-normal">
+            </div>
+            </div>
+            <div class="buttons mt-6 p-2 is-flex is-justify-content-end">
+                <button class="button is-info">Agregar</button>
+                <button class="button is-danger is-outlined">Cancelar</button>
+            </div>
         </div>
     </section>
     <script src="main.js"></script>
