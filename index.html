@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="styles.css">
     <title>Ahorradas</title>
 </head>
 
@@ -60,25 +61,25 @@
     <section class="section is-large">
         <div class="container">
             <div class="columns">
-                <div class="column is-4 has-background-warning">
-                    <div class="box has-background-success">
+                <div class="column is-4 ">
+                    <div class="box">
                         <h2 class="title">Balance</h2>
                         <div class="is-flex is-justify-content-space-between">
                             <p class="is-size-5">Ganancias</p>
-                            <p>+$0</p>
+                            <p class="has-text-success">+$0</p>
                         </div>
                         <div class="is-flex is-justify-content-space-between pt-5">
                             <p class="is-size-5">Gastos</p>
-                            <p>-$0</p>
+                            <p  class="has-text-danger">-$0</p>
                         </div>
                         <div class="is-flex is-justify-content-space-between has-text-weight-bold pt-5">
                             <p class="is-size-5">Total</p>
                             <p>$0</p>
                         </div>
                     </div>
-                    <div class="box has-background-success">
+                    <div class="box">
                         <div class="is-flex is-justify-content-space-between">
-                            <p class="title ">Ganancias</p>
+                            <h2 class="title ">Ganancias</h2>
                             <p class="is-clickable">Ocultar filtros</p>
                         </div>
                         <div class="field has-text-weight-bold">
@@ -127,15 +128,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="column is-8 has-background-warning">
-                    <div class="box has-background-success">
-                        <div>
+                <div class="column is-8">
+                    <div class="box">
+                        <div class="is-flex is-justify-content-space-between">
                             <p class="title">Operaciones</p>
-                            <button></button>
+                            <button class="button is-info">+ Operaciones</button>
                         </div>
-                        <figure class="image is-square">
+                        <div class="m-6 is-flex is-flex-direction-column is is-align-items-center">
+                        <figure class="image m-4" id="op-img">
                             <img src="/imagenes/mujeres3.png" alt="">
                         </figure>
+                        <h3 class="is-size-3 pt-3">Sin Resultados</h3>
+                        <p class="is-size-5 pt-2">Cambia los filtros o agrega operaciones</p>
+
+                    </div>
+
 
                     </div>
                 </div>
