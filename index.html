@@ -58,28 +58,81 @@
 
     <!-- Balance Section -->
     <section class="section is-large">
-        <div class="columns">
-            <div class="column is-flex-direction-column">
-                <div class="box has-background-success">
-                    <h2 class="title">Balance</h2>
-                    <div class="is-flex is-justify-content-space-between">
-                        <p>Ganancias</p>
-                        <p>+$0</p>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4 has-background-warning">
+                    <div class="box has-background-success">
+                        <h2 class="title">Balance</h2>
+                        <div class="is-flex is-justify-content-space-between">
+                            <p class="is-size-5">Ganancias</p>
+                            <p>+$0</p>
+                        </div>
+                        <div class="is-flex is-justify-content-space-between pt-5">
+                            <p class="is-size-5">Gastos</p>
+                            <p>-$0</p>
+                        </div>
+                        <div class="is-flex is-justify-content-space-between has-text-weight-bold pt-5">
+                            <p class="is-size-5">Total</p>
+                            <p>$0</p>
+                        </div>
                     </div>
-                    <div class="is-flex is-justify-content-space-between pt-5">
-                        <p>Gastos</p>
-                        <p>-$0</p>
-                    </div>
-                    <div class="is-flex is-justify-content-space-between has-text-weight-bold pt-5">
-                        <p>Total</p>
-                        <p>$0</p>
+                    <div class="box has-background-success">
+                        <div class="is-flex is-justify-content-space-between">
+                            <p class="title ">Ganancias</p>
+                            <p>Ocultar filtros</p>
+                        </div>
+                        <div class="field has-text-weight-bold">
+
+                            <div class="control is-flex is-flex-direction-column">
+                                <label class="pb-1">Tipo</label>
+                                <div class="select is-fullwidth">
+                                    <select>
+                                        <option>Todos</option>
+                                        <option>Gasto</option>
+                                        <option>Ganancia</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control is-flex is-flex-direction-column">
+                                <label class="pb-1 pt-3">Categoria</label>
+                                <div class="select is-fullwidth">
+                                    <select>
+                                        <option>Todas</option>
+                                        <option>Comida</option>
+                                        <option>Servicios</option>
+                                        <option>Salidas</option>
+                                        <option>Educacion</option>
+                                        <option>Transporte</option>
+                                    </select>
+                                </div>
+                            </div>
+                                                        
+                            <div class="control is-flex is-flex-direction-column">
+                                <label class="pb-1 pt-3">Desde</label>
+                                <input type="date" class="input is-normal">
+                            </div>
+
+                            <div class="control is-flex is-flex-direction-column">
+                                <label class="pb-1 pt-3">Ordenar por</label>
+                                <div class="select is-fullwidth">
+                                    <select>
+                                        <option>Mas reciente</option>
+                                        <option>Menos reciente</option>
+                                        <option>Mayor monto</option>
+                                        <option>Menor monto</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div class="box has-background-success"></div>
+                <div class="column is-8 has-background-warning">
+                    <div class="box has-background-success"></div>
+                </div>
             </div>
-            <div class="column is-8 has-background-warning">
-                <div class="box has-background-success"></div>
-            </div>
+        </div>
+        
         </div>
     </section>
     <script src="main.js"></script>
