@@ -61,7 +61,7 @@
 
     <!-- Balance Section -->
 
-    <section class="section is-medium is-hidden">
+    <section class="section is-medium" id="balance-section">
         <div class="container">
             <div class="columns">
                 <div class="column is-4 ">
@@ -134,15 +134,27 @@
                     <div class="box">
                         <div class="is-flex is-justify-content-space-between">
                             <p class="title">Operaciones</p>
-                            <button class="button is-info">+ Nueva operacion</button>
+                            <button class="button is-info" id="btn-newop">+ Nueva operacion</button>
                         </div>
-                        <div class="m-6 is-flex is-flex-direction-column is-align-items-center">
+                        <div class="m-6 is-flex is-flex-direction-column is-align-items-center" id="div-img-op">
                             <figure class="image m-4" id="op-img">
                                 <img src="/imagenes/mujeres3.png" alt="">
                             </figure>
                             <h3 class="is-size-3 pt-3">Sin Resultados</h3>
                             <p class="is-size-5 pt-2">Cambia los filtros o agrega operaciones</p>
                         </div>
+                        <table class="table is-narrow is-fullwidth is-hidden">
+                            <thead>
+                              <tr>
+                                <th>Descripción</th>
+                                <th>Categoria</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
                     </div>
                 </div>
             </div>
@@ -153,54 +165,69 @@
 
     <!-- Operaciones Section -->
 
-    <section class="section is-medium is-flex is-justify-content-center">
+    <section class="section is-medium is-flex is-justify-content-center is-hidden" id="op-section">
         <div class="column is-8 ">
-        <div class="box p-5">
-            <h1 class="title has-text-weight-bold">Nueva Operación</h1>
-            <div class="field has-text-weight-bold">
-                <div class="control is-flex is-flex-direction-column">
-                    <label class="pb-1 pt-4">Descripción</label>
-                    <textarea class="textarea" type="text" rows="2"></textarea>
+            <form class="box p-5 has-text-weight-bold" id="op-form">
+                <h1 class="title has-text-weight-bold">Nueva Operación</h1>
+              
+                    <div class="field">
+                        <label class="pb-1 pt-4">Descripción</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <textarea class="textarea" type="text" rows="2" name="description" id="description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Monto</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <input class="input" type="text" name="amount" placeholder="0" id="amount-input">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="pb-1 pt-4">Tipo</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <div class="select is-fullwidth">
+                                <select id="type-select" name="type">
+                                    <option value="gasto">Gasto</option>
+                                    <option value="ganancia">Ganancia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Categoría</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <div class="select is-fullwidth">
+                                <select id="categ-select" name="category">
+                                    <option>Comida</option>
+                                    <option>Servicios</option>
+                                    <option>Salidas</option>
+                                    <option>Educación</option>
+                                    <option>Transporte</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Fecha</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <input type="date" class="input is-normal" name="date">
+                        </div>
+                    </div>
+                
+                <div class="buttons mt-6 is-flex is-justify-content-end">
+                    <button class="button is-info" id="btn-add" type="submit">Agregar</button>
+                    <button class="button is-danger is-outlined" id="btn-cancel">Cancelar</button>
                 </div>
-                <div class="control is-flex is-flex-direction-column">
-                    <label class="pb-1 pt-4">Monto</label>
-                    <input class="input" type="text" placeholder="0">
-                </div>
-            <div class="control is-flex is-flex-direction-column">
-                <label class="pb-1 pt-4">Tipo</label>
-                <div class="select is-fullwidth">
-                    <select>
-                        <option>Gasto</option>
-                        <option>Ganancia</option>
-                    </select>
-                </div>
-            </div>
-            <div class="control is-flex is-flex-direction-column">
-                <label class="pb-1 pt-4">Categoría</label>
-                <div class="select is-fullwidth">
-                    <select>
-                        <option>Comida</option>
-                        <option>Servicios</option>
-                        <option>Salidas</option>
-                        <option>Educación</option>
-                        <option>Transporte</option>
-                    </select>
-                </div>
-            </div>
-            <div class="control is-flex is-flex-direction-column">
-                <label class="pb-1 pt-4">Fecha</label>
-                <input type="date" class="input is-normal">
-            </div>
-            </div>
-            <div class="buttons mt-6 is-flex is-justify-content-end">
-                <button class="button is-info">Agregar</button>
-                <button class="button is-danger is-outlined">Cancelar</button>
-            </div>
+            </form>
         </div>
-    </div>
+
+
     </section>
 
-     <!-- End Operaciones Section -->
+    <!-- End Operaciones Section -->
 
 
     <script src="main.js"></script>
