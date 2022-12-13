@@ -20,6 +20,10 @@ let $tableBody = $ ('#table-body');
 let $description = $ ('#description');
 let $amountInput = $ ('#amount-input');
 let $typeSelect = $ ('#type-select');
+let $categSelect = $ ('#categ-select');
+let $dateInput = $ ('#date-input');
+
+console.log ($categSelect)
 
 
 $btnNewOp.addEventListener ("click", (event)=>{
@@ -40,18 +44,27 @@ $btnNewOp.addEventListener ("click", (event)=>{
 
 }) 
 
+const reseatInputs = () => {
+  $description.value = "";
+  $amountInput.value = "";
+  $typeSelect.value = "expense";
+  $categSelect.value = "food";
+  $dateInput.value = "";
+ } 
+
+
  $opForm.addEventListener ('submit', (event)=>{
    event.preventDefault ();
-   $tableBody.innerHTML += `<td>${event.target.description.value}</td>`;
-   $tableBody.innerHTML += `<td>${event.target.category.value}</td>`;
-   $tableBody.innerHTML += `<td>$ ${event.target.amount.value}</td>`;
-   $tableBody.innerHTML += `<td>${event.target.date.value}</td>`;
-   $tableBody.innerHTML += `<td><a href="">Editar</a>
-   <a href="">Eliminar</a></td>`;   
+   $tableBody.innerHTML += `<tr><td>${$description.value}</td>
+    <td>${event.target.category.value}</td>
+    <td>${event.target.amount.value}</td>
+    <td>${event.target.date.value}</td>
+    <td><a href="">Editar</a>
+    <a href="">Eliminar</a></td></tr>`;  
+    
+    reseatInputs();
+
  })
 
- 
-   
- 
 
 

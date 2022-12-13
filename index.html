@@ -153,9 +153,7 @@
                                 <th>Acciones</th>
                               </tr>
                             </thead>
-                            <tbody>
-                                <tr id="table-body">
-                                </tr>
+                            <tbody id="table-body">
                             </tbody>
                             </table>
                     </div>
@@ -191,8 +189,8 @@
                         <div class="control is-flex is-flex-direction-column">
                             <div class="select is-fullwidth">
                                 <select id="type-select" name="type">
-                                    <option value="gasto">Gasto</option>
-                                    <option value="ganancia">Ganancia</option>
+                                    <option value="expense">Gasto</option>
+                                    <option value="profit">Ganancia</option>
                                 </select>
                             </div>
                         </div>
@@ -203,11 +201,11 @@
                         <div class="control is-flex is-flex-direction-column">
                             <div class="select is-fullwidth">
                                 <select id="categ-select" name="category">
-                                    <option>Comida</option>
-                                    <option>Servicios</option>
-                                    <option>Salidas</option>
-                                    <option>Educación</option>
-                                    <option>Transporte</option>
+                                    <option value="food">Comida</option>
+                                    <option value="services">Servicios</option>
+                                    <option value="outings">Salidas</option>
+                                    <option value="education">Educación</option>
+                                    <option value="transport">Transporte</option>
                                 </select>
                             </div>
                         </div>
@@ -216,7 +214,7 @@
                     <div class="field">
                         <label class="pb-1 pt-4">Fecha</label>
                         <div class="control is-flex is-flex-direction-column">
-                            <input type="date" class="input is-normal" name="date">
+                            <input type="date" class="input is-normal" name="date" id="date-input">
                         </div>
                     </div>
                 
