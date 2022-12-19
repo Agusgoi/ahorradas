@@ -52,26 +52,28 @@ const reseatInputs = () => {
   $dateInput.value = "";
  } 
 
- 
+
 
  $opForm.addEventListener ('submit', (event)=>{
    event.preventDefault ();
-   $tableBody.innerHTML += `<tr><td>${$description.value}</td>
-    <td>${event.target.category.value}</td>`
-    typeOfAmount (); //?
-    `<td>${event.target.date.value}</td>
+   if ($typeSelect.value === "profit") {
+    $tableBody.innerHTML += `<tr><td>${$description.value}</td>
+    <td>${event.target.category.value}</td>
+    <td class="has-text-success">+$ ${event.target.amount.value}</td>
+    <td>${event.target.date.value}</td>
     <td><a href="">Editar</a>
     <a href="">Eliminar</a></td></tr>`;  
-    
+   }else{
+    $tableBody.innerHTML += `<tr><td>${$description.value}</td>
+   <td>${event.target.category.value}</td>
+   <td class="has-text-danger">-$ ${event.target.amount.value}</td>
+   <td>${event.target.date.value}</td>
+   <td><a href="">Editar</a>
+   <a href="">Eliminar</a></td></tr>`; 
+     }
     reseatInputs();
 
  })
 
-// mal hecha, no funciona
- let typeOfAmount = (event) => {
-  if ($amountInput.value  > 0) {
-    $tableBody.innerHTML += `<td class="has-text-success">+$ ${event.target.amount.value}</td>`
-  }else {
-    $tableBody.innerHTML += `<td class="has-text-danger">-$ ${event.target.amount.value}</td>`
-  }
-}
+
+
