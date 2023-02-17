@@ -69,11 +69,11 @@
                         <h2 class="title">Balance</h2>
                         <div class="is-flex is-justify-content-space-between">
                             <p class="is-size-5">Ganancias</p>
-                            <p class="has-text-success">+$0</p>
+                            <p class="has-text-success" id="profit-total">+$0</p>
                         </div>
                         <div class="is-flex is-justify-content-space-between pt-5">
                             <p class="is-size-5">Gastos</p>
-                            <p class="has-text-danger">-$0</p>
+                            <p class="has-text-danger" id="expenses-total">-$0</p>
                         </div>
                         <div class="is-flex is-justify-content-space-between has-text-weight-bold pt-5">
                             <p class="is-size-5">Total</p>
@@ -174,8 +174,9 @@
                     <div class="field">
                         <label class="pb-1 pt-4">Descripción</label>
                         <div class="control is-flex is-flex-direction-column">
-                            <textarea class="textarea" type="text" rows="2" name="description" id="description"></textarea>
+                            <textarea class="textarea" type="text" rows="2" name="description" id="description-input"></textarea>
                         </div>
+                        <p class="description-error"></p>
                     </div>
 
                     <div class="field">
@@ -183,6 +184,7 @@
                         <div class="control is-flex is-flex-direction-column">
                             <input class="input" type="text" name="amount" placeholder="0" id="amount-input">
                         </div>
+                        <p class="amount-error"></p>
                     </div>
                     <div class="field">
                         <label class="pb-1 pt-4">Tipo</label>
@@ -192,6 +194,7 @@
                                     <option value="expense">Gasto</option>
                                     <option value="profit">Ganancia</option>
                                 </select>
+                                <p class="type-error"></p>
                             </div>
                         </div>
                     </div>
@@ -207,6 +210,7 @@
                                     <option value="education">Educación</option>
                                     <option value="transport">Transporte</option>
                                 </select>
+                                <p class="category-error"></p>
                             </div>
                         </div>
                     </div>
@@ -216,12 +220,14 @@
                         <div class="control is-flex is-flex-direction-column">
                             <input type="date" class="input is-normal" name="date" id="date-input">
                         </div>
+                        <p class="date-error"></p>
                     </div>
                 
                 <div class="buttons mt-6 is-flex is-justify-content-end">
                     <button class="button is-info" id="btn-add" type="submit">Agregar</button>
                     <button class="button is-danger is-outlined" id="btn-cancel">Cancelar</button>
                 </div>
+                <p class="form-error"></p>
             </form>
         </div>
 
