@@ -1,105 +1,193 @@
-const $ = (selector) => document.querySelector (selector);
+const $ = (selector) => document.querySelector(selector);
 
 window.addEventListener("load", () => {
+  // --------------- VARIABLES ---------------
 
-// --------------- VARIABLES ---------------
+  let operations = [];
+  let EditToDo = {};
 
-let operations = [];
+  // Regex
+  const regExpAlpha = /^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{4,20}$/;
+  const regExpNumber = /^[1-9]\d*(,\d+)?$/;
 
-// Regex
-const regExpAlpha = /^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{4,20}$/;
-const regExpNumber = /^[1-9]\d*(,\d+)?$/;
+  //body elements
+  const $balanceSection = $("#balance-section");
+  const $opSection = $("#op-section");
+  const $editOpSection = $("#edit-op-section");
+  const $divImgOp = $("#div-img-op");
+  const $opForm = $("#op-form");
+  const $editOpForm = $("#edit-op-form");
+  const $opTable = $("#op-table");
+  const $tableBody = $("#table-body");
 
-//body elements
-const $balanceSection = $ ('#balance-section');
-const $opSection = $ ('#op-section');
-const $divImgOp = $ ('#div-img-op');
-const $opForm = $ ('#op-form');
-const $opTable = $ ('#op-table');
-const $tableBody = $ ('#table-body');
+  //buttons
+  const $btnNewOp = $("#btn-newop");
+  const $btnCancel = $("#btn-cancel");
+  const $btnEditCancel = $("#edit-btn-cancel");
 
-//buttons
-const $btnNewOp = $ ('#btn-newop');
-const $btnCancel = $ ('#btn-cancel');
+  //inputs
+  const $descriptionInput = $("#description-input");
+  const $amountInput = $("#amount-input");
+  const $typeSelect = $("#type-select");
+  const $categSelect = $("#categ-select");
+  const $dateInput = $("#date-input");
+  const $profitTotal = $("#profit-total");
+  const $expensesTotal = $("#expenses-total");
 
-//inputs
-const $descriptionInput = $ ('#description-input');
-const $amountInput = $ ('#amount-input');
-const $typeSelect = $ ('#type-select');
-const $categSelect = $ ('#categ-select');
-const $dateInput = $ ('#date-input');
-const $profitTotal = $ ('#profit-total');
-const $expensesTotal = $ ('#expenses-total');
+  //edit inputs
+  const $editDescriptionInput = $("#edit-description-input");
+  const $editAmountInput = $("#edit-amount-input");
+  const $editTypeSelect = $("#edit-type-select");
+  const $editCategSelect = $("#edit-categ-select");
+  const $editDateInput = $("#edit-date-input");
 
-//errors
-const $descriptionError = $ ('.description-error');
-const $amountError = $ ('.amount-error');
-const $dateError = $ ('.date-error');
-const $formError = $ ('.form-error');
+  //errors
+  const $descriptionError = $(".description-error");
+  const $amountError = $(".amount-error");
+  const $dateError = $(".date-error");
+  const $formError = $(".form-error");
 
-// ----------- BUTTONS EVENTS -----------
+  // ----------- BUTTONS EVENTS -----------
 
-$btnNewOp.addEventListener ("click", (event)=>{
-    $balanceSection.classList.add ("is-hidden");
-    $opSection.classList.remove ("is-hidden");
-})
-
-$btnCancel.addEventListener ("click", (event)=>{
-    $balanceSection.classList.remove ("is-hidden");
-    $opSection.classList.add ("is-hidden");
-})
-
-
-
-
-// ----------- BALANCE SECTION - FUNCTIONS -----------
-
-
-// Reseat Form inputs
-const reseatInputs = () => {
-  $descriptionInput.value = "";
-  $amountInput.value = "";
-  $typeSelect.value = "expense";
-  $categSelect.value = "food";
-  $dateInput.value = "";
-  $descriptionError.innerText = "";
-  $amountError.innerText = "";
-  $dateError.innerText = "";
-} 
-
-
-// Paint
-
-const paint = (array) => {
- 
-  array.forEach((element) => {
-
-    if ($typeSelect.value === "profit") {
-      $tableBody.innerHTML += `<tr><td>${$descriptionInput.value}</td>
-      <td>${$categSelect.value}</td>
-      <td class="has-text-success has-text-weight-bold">$ ${$amountInput.value}</td>
-      <td>${$dateInput.value}</td>
-      <td><button class="btn-edit" id=${element.id}>Editar</button>
-      <button class="btn-delete" id=${element.id}>Eliminar</button></td></tr>`
-    }else{
-      $tableBody.innerHTML += `<tr><td>${$descriptionInput.value}</td>
-      <td>${$categSelect.value}</td>
-      <td class="has-text-danger has-text-weight-bold">$ ${$amountInput.value}</td>
-      <td>${$dateInput.value}</td>
-      <td><button class="btn-edit" id=${element.id}>Editar</button>
-      <button class="btn-delete" id=${element.id}>Eliminar</button></td></tr>`
-    }
-
-
-// amountTotals (); ???????
+  $btnNewOp.addEventListener("click", (event) => {
+    $balanceSection.classList.add("is-hidden");
+    $opSection.classList.remove("is-hidden");
   });
-}
+
+  $btnCancel.addEventListener("click", (event) => {
+    $balanceSection.classList.remove("is-hidden");
+    $opSection.classList.add("is-hidden");
+  });
+
+  // ----------- BALANCE SECTION - FUNCTIONS -----------
+
+  // Reseat Form inputs
+  const reseatInputs = () => {
+    $descriptionInput.value = "";
+    $amountInput.value = "";
+    $typeSelect.value = "expense";
+    $categSelect.value = "food";
+    $dateInput.value = "";
+    $descriptionError.innerText = "";
+    $amountError.innerText = "";
+    $dateError.innerText = "";
+  };
+
+  // Paint
+
+  const paint = (array) => {
+    $tableBody.innerHTML = "";
+
+    array.forEach((element) => {
+      console.log(element.Type);
+
+      if (element.Type === "profit") {
+        $tableBody.innerHTML += `<tr><td>${element.Description}</td>
+      <td>${element.Category}</td>
+      <td class="has-text-success has-text-weight-bold">$ ${element.Amount}</td>
+      <td>${element.Date}</td>
+      <td><button class="btn-edit" id=${element.id}>Editar</button>
+      <button class="btn-delete" id=${element.id}>Eliminar</button></td></tr>`;
+      } else {
+        $tableBody.innerHTML += `<tr><td>${element.Description}</td>
+      <td>${element.Category}</td>
+      <td class="has-text-danger has-text-weight-bold">$ ${element.Amount}</td>
+      <td>${element.Date}</td>
+      <td><button class="btn-edit" id=${element.id}>Editar</button>
+      <button class="btn-delete" id=${element.id}>Eliminar</button></td></tr>`;
+      }
+    });
+
+    // Delete
+
+    $btnDeleteTarea = document.querySelectorAll(".btn-delete");
+    $btnDeleteTarea.forEach((button) => {
+      console.log("for each");
+      button.addEventListener("click", (event) => {
+        console.log("click delete");
+        operations = operations.filter((op) => op.id !== event.target.id);
+        paint(operations);
+      });
+    });
+
+    // Edit
+
+    $btnEditTarea = document.querySelectorAll(".btn-edit");
+    $btnEditTarea.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        $editOpSection.classList.remove("is-hidden");
+        $balanceSection.classList.add("is-hidden");
+        EditToDo = operations.find((op) => op.id === event.target.id);
+
+        $editDescriptionInput.value = EditToDo.Description;
+        $editAmountInput.value = EditToDo.Amount;
+        $editTypeSelect.value = EditToDo.Type;
+        $editCategSelect.value = EditToDo.Category;
+        $editDateInput.value = EditToDo.Date;
+        console.log(EditToDo);
+      });
+    });
+  };
+
+  // ----------- EDIT OP FORM -----------
+
+  $btnEditCancel.addEventListener("click", (event) => {
+    event.preventDefault();
+    $editOpSection.classList.add("is-hidden");
+    $balanceSection.classList.remove("is-hidden");
+    $opTable.classList.remove("is-hidden");
+  });
+
+  $editDescriptionInput.addEventListener("blur", () => {
+    EditToDo.Description = $editDescriptionInput.value;
+  })
+
+  $editAmountInput.addEventListener("blur", () => {
+    EditToDo.Amount = $editAmountInput.value;
+  })
+
+  $editTypeSelect.addEventListener("blur", () => {
+    EditToDo.Type = $editTypeSelect.value;
+  })
+
+  $editCategSelect.addEventListener("blur", () => {
+    EditToDo.Category = $editCategSelect.value;
+  })
+
+  $editDateInput.addEventListener("blur", () => {
+    EditToDo.Date = $editDateInput.value;
+  })
+
+ // EDIT Submit
+
+ $editOpForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  $editOpSection.classList.add("is-hidden");
+    $balanceSection.classList.remove("is-hidden");
+    $opTable.classList.remove("is-hidden");
+  paint(operations);
+});
 
 
 
 
+  const totalSum = (array) => {
+    let profitTotal = 0;
+    let expenseTotal = 0;
 
-//  ------------ Inputs & Form Validation -------------  //
+    array.forEach((op) => {
+      if (op.Type === "expense") {
+        expenseTotal = expenseTotal += Number(op.Amount);
+      } else {
+        profitTotal = profitTotal += Number(op.Amount);
+      }
+
+      console.log(profitTotal);
+      console.log(expenseTotal);
+    });
+  };
+
+  //  ------------ Inputs & Form Validation -------------  //
 
   // Inputs Validation
 
@@ -131,7 +219,8 @@ const paint = (array) => {
       $amountError.style.fontSize = "12px";
       validationErrors = true;
     } else if (!regExpNumber.test($amountInput.value)) {
-      $amountError.innerText = "Monto invalido. Debe ser mayor a 0, puede usar coma.";
+      $amountError.innerText =
+        "Monto invalido. Debe ser mayor a 0, puede usar coma.";
       $amountError.style.color = "red";
       $amountError.style.fontSize = "12px";
       validationErrors = true;
@@ -143,16 +232,14 @@ const paint = (array) => {
     }
   });
 
-
   $dateInput.addEventListener("input", (event) => {
-    console.log (event)
     if (!$dateInput.value.trim()) {
       $dateError.innerText = "Campo obligatorio";
       $dateError.style.color = "red";
       $dateError.style.fontSize = "12px";
       validationErrors = true;
       // como validar la fecha? tiene que ser igual o menor que hoy
-   /*  } else if (!regExpNumber.test($amountInput.value)) {
+      /*  } else if (!regExpNumber.test($amountInput.value)) {
       $amountError.innerText = "Monto invalido. Debe ser mayor a 0, puede usar coma.";
       $amountError.style.color = "red";
       $amountError.style.fontSize = "12px";
@@ -165,9 +252,8 @@ const paint = (array) => {
     }
   });
 
-
   // Form Validation
-  
+
   $opForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -186,73 +272,37 @@ const paint = (array) => {
         elementsForm[i].style.backgroundColor = "none";
       }
     }
-    
-    
+
+    // PUSH to Operations array
+
     if (!errors && !validationErrors) {
-        operations.push({
-          id: crypto.randomUUID(),
-          Description: $descriptionInput.value,
-          Amount: $amountInput.value,
-          Type: $typeSelect.value,
-          Category: $categSelect.value,
-          Date: $dateInput.value
-        });
-        console.log(operations)
+      operations.push({
+        id: crypto.randomUUID(),
+        Description: $descriptionInput.value,
+        Amount: $amountInput.value,
+        Type: $typeSelect.value,
+        Category: $categSelect.value,
+        Date: $dateInput.value,
+      });
 
-        $opSection.classList.add ("is-hidden");
-        $balanceSection.classList.remove ("is-hidden");
-        $divImgOp.classList.add ("is-hidden");
-        $opTable.classList.remove ("is-hidden");
+      paint(operations);
+      reseatInputs();
 
-        paint(operations);
-        reseatInputs();
-     
-        //$form.submit()
-      }
-    })
-  
+      $opSection.classList.add("is-hidden");
+      $balanceSection.classList.remove("is-hidden");
+      $divImgOp.classList.add("is-hidden");
+      $opTable.classList.remove("is-hidden");
+    }
 
-
-
-
-
-
-
-
-
-
-
+    // totalSum(operations);
+    console.log(operations);
+  });
 
   //// LO QUE TENIA HECHO ES ESTO //////
 
-/* $Form.addEventListener ('submit', (event)=>{
-   event.preventDefault ();
-  if ($typeSelect.value === "profit") {
-    $tableBody.innerHTML += `<tr><td>${$description.value}</td>
-    <td>${$categSelect.value}</td>
-    <td class="has-text-success has-text-weight-bold">+$ ${$amountInput.value}</td>
-    <td>${$dateInput.value}</td>
-    <td><a href="">Editar</a>
-    <a href="">Eliminar</a></td></tr>`;  
-  }else{
-    $tableBody.innerHTML += `<tr><td>${$description.value}</td>
-   <td>${$categSelect.value}</td>
-   <td class="has-text-danger has-text-weight-bold">-$ ${$amountInput.value}</td>
-   <td>${$dateInput.value}</td>
-   <td><a href="">Editar</a>
-   <a href="">Eliminar</a></td></tr>`; 
-  } */
+  //console.log ($amountInput.value)
 
-  //reseatInputs();
- // amountTotals ();
- 
-
- //})
-
- //console.log ($amountInput.value)
-
-
-/*  const amountTotals = () => {
+  /*  const amountTotals = () => {
   if ($typeSelect.value === "profit") {
     $amountInput.addEventListener ("input", (event)=>{
       $profitTotal.innerText = event.target.value;
@@ -266,10 +316,8 @@ const paint = (array) => {
   }}
 
   */
- 
 
-
-  const amountTotals = () => {
+  /*   const amountTotals = () => {
     $amountInput.addEventListener ("input", (event)=>{
       if ($typeSelect.value === "expense") {
         $expensesTotal.innerText += event.target.value;
@@ -280,9 +328,9 @@ const paint = (array) => {
     } 
 
 
-    amountTotals ();
-    
-/*    
+    amountTotals (); */
+
+  /*    
 $amountInput.addEventListener ("change", (event)=>{
       if ($typeSelect.value === "expense") {
         $expensesTotal.innerText += event.target.value;
@@ -322,22 +370,11 @@ $amountInput.addEventListener ("change", (event)=>{
     }
     return total;
   }; */
-  
 
-/* 1. En la rama de desarrollo hago git merge main para traerme los cambios de main
+  /* 1. En la rama de desarrollo hago git merge main para traerme los cambios de main
 2. Luego hago cambios nuevos en la rama de desarrollo, git commit, git push, y si esta todo bien, vuelvo a main
 3. Para en main, hago git merge rama-de-desarrollo
  */
 
-
-
-
-
-
-
-
-
-
   //estos cierran la funcion window-load
-
 });

@@ -164,7 +164,7 @@
 
     <!-- End Balance Section -->
 
-    <!-- Operaciones Section -->
+    <!-- NEW OP Section -->
 
     <section class="section is-medium is-flex is-justify-content-center is-hidden" id="op-section">
         <div class="column is-8 ">
@@ -233,7 +233,78 @@
 
     </section>
 
-    <!-- End Operaciones Section -->
+    <!-- End NEW OP Section -->
+
+     <!-- Edit OP Section -->
+
+     <section class="section is-medium is-flex is-justify-content-center is-hidden" id="edit-op-section">
+        <div class="column is-8 ">
+            <form class="box p-5 has-text-weight-bold" id="edit-op-form">
+                <h1 class="title has-text-weight-bold">Editar Operación</h1>
+              
+                    <div class="field">
+                        <label class="pb-1 pt-4">Descripción</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <textarea class="textarea" type="text" rows="2" name="description" id="edit-description-input"></textarea>
+                        </div>
+                        <p class="description-error"></p>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Monto</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <input class="input" type="text" name="amount" placeholder="0" id="edit-amount-input">
+                        </div>
+                        <p class="amount-error"></p>
+                    </div>
+                    <div class="field">
+                        <label class="pb-1 pt-4">Tipo</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <div class="select is-fullwidth">
+                                <select id="edit-type-select" name="type">
+                                    <option value="expense">Gasto</option>
+                                    <option value="profit">Ganancia</option>
+                                </select>
+                                <p class="type-error"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Categoría</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <div class="select is-fullwidth">
+                                <select id="edit-categ-select" name="category">
+                                    <option value="food">Comida</option>
+                                    <option value="services">Servicios</option>
+                                    <option value="outings">Salidas</option>
+                                    <option value="education">Educación</option>
+                                    <option value="transport">Transporte</option>
+                                </select>
+                                <p class="category-error"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="pb-1 pt-4">Fecha</label>
+                        <div class="control is-flex is-flex-direction-column">
+                            <input type="date" class="input is-normal" name="date" id="edit-date-input">
+                        </div>
+                        <p class="date-error"></p>
+                    </div>
+                
+                <div class="buttons mt-6 is-flex is-justify-content-end">
+                    <button class="button is-info" id="edit-btn-save" type="submit">Guardar cambios</button>
+                    <button class="button is-danger is-outlined" id="edit-btn-cancel">Cancelar</button>
+                </div>
+                <p class="form-error"></p>
+            </form>
+        </div>
+
+    </section>
+
+    <!-- End Edit OP Section -->
 
 
     <script src="main.js"></script>
