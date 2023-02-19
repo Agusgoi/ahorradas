@@ -19,6 +19,9 @@ window.addEventListener("load", () => {
   const $editOpForm = $("#edit-op-form");
   const $opTable = $("#op-table");
   const $tableBody = $("#table-body");
+  let $profitTotal = $("#profit-total");
+  let $expensesTotal = $("#expenses-total");
+  let $balanceTotal = $("#balance-total");
 
   //buttons
   const $btnNewOp = $("#btn-newop");
@@ -31,8 +34,6 @@ window.addEventListener("load", () => {
   const $typeSelect = $("#type-select");
   const $categSelect = $("#categ-select");
   const $dateInput = $("#date-input");
-  const $profitTotal = $("#profit-total");
-  const $expensesTotal = $("#expenses-total");
 
   //edit inputs
   const $editDescriptionInput = $("#edit-description-input");
@@ -79,8 +80,6 @@ window.addEventListener("load", () => {
     $tableBody.innerHTML = "";
 
     array.forEach((element) => {
-      console.log(element.Type);
-
       if (element.Type === "profit") {
         $tableBody.innerHTML += `<tr><td>${element.Description}</td>
       <td>${element.Category}</td>
@@ -102,7 +101,6 @@ window.addEventListener("load", () => {
 
     $btnDeleteTarea = document.querySelectorAll(".btn-delete");
     $btnDeleteTarea.forEach((button) => {
-      console.log("for each");
       button.addEventListener("click", (event) => {
         console.log("click delete");
         operations = operations.filter((op) => op.id !== event.target.id);
@@ -140,36 +138,35 @@ window.addEventListener("load", () => {
 
   $editDescriptionInput.addEventListener("blur", () => {
     EditToDo.Description = $editDescriptionInput.value;
-  })
+  });
 
   $editAmountInput.addEventListener("blur", () => {
     EditToDo.Amount = $editAmountInput.value;
-  })
+  });
 
   $editTypeSelect.addEventListener("blur", () => {
     EditToDo.Type = $editTypeSelect.value;
-  })
+  });
 
   $editCategSelect.addEventListener("blur", () => {
     EditToDo.Category = $editCategSelect.value;
-  })
+  });
 
   $editDateInput.addEventListener("blur", () => {
     EditToDo.Date = $editDateInput.value;
-  })
+  });
 
- // EDIT Submit
+  // EDIT Submit
 
- $editOpForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  $editOpSection.classList.add("is-hidden");
+  $editOpForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    $editOpSection.classList.add("is-hidden");
     $balanceSection.classList.remove("is-hidden");
     $opTable.classList.remove("is-hidden");
-  paint(operations);
-});
+    paint(operations);
+  });
 
-
-
+  // Balance Functions
 
   const totalSum = (array) => {
     let profitTotal = 0;
@@ -181,11 +178,14 @@ window.addEventListener("load", () => {
       } else {
         profitTotal = profitTotal += Number(op.Amount);
       }
-
-      console.log(profitTotal);
-      console.log(expenseTotal);
     });
+
+    $profitTotal.innerText = `$ ${profitTotal}`;
+    $expensesTotal.innerText = `$ ${expenseTotal}`;
+    $balanceTotal.innerText = `$ ${profitTotal + expenseTotal}`;
   };
+
+  // Inputs Validation
 
   //  ------------ Inputs & Form Validation -------------  //
 
@@ -294,8 +294,7 @@ window.addEventListener("load", () => {
       $opTable.classList.remove("is-hidden");
     }
 
-    // totalSum(operations);
-    console.log(operations);
+    totalSum(operations);
   });
 
   //// LO QUE TENIA HECHO ES ESTO //////
