@@ -22,11 +22,13 @@ window.addEventListener("load", () => {
   let $profitTotal = $("#profit-total");
   let $expensesTotal = $("#expenses-total");
   let $balanceTotal = $("#balance-total");
+  const $categTableBody = $("#body-table-categ");
 
   //buttons
   const $btnNewOp = $("#btn-newop");
   const $btnCancel = $("#btn-cancel");
   const $btnEditCancel = $("#edit-btn-cancel");
+  const $btnAddCateg = $("#add-categ");
 
   //inputs
   const $descriptionInput = $("#description-input");
@@ -34,6 +36,7 @@ window.addEventListener("load", () => {
   const $typeSelect = $("#type-select");
   const $categSelect = $("#categ-select");
   const $dateInput = $("#date-input");
+  const $newCategInput = $("#new-categ");
 
   //edit inputs
   const $editDescriptionInput = $("#edit-description-input");
@@ -66,7 +69,7 @@ window.addEventListener("load", () => {
     $opSection.classList.add("is-hidden");
   });
 
-  // ----------- BALANCE SECTION - FUNCTIONS -----------
+  // ********************************** BALANCE ********************************** // 
 
   // Reseat Form inputs
   const reseatInputs = () => {
@@ -105,8 +108,8 @@ window.addEventListener("load", () => {
 
     // Delete
 
-    $btnDeleteTarea = document.querySelectorAll(".btn-delete");
-    $btnDeleteTarea.forEach((button) => {
+    $btnDeleteOp = document.querySelectorAll(".btn-delete");
+    $btnDeleteOp.forEach((button) => {
       button.addEventListener("click", (event) => {
         console.log("click delete");
         operations = operations.filter((op) => op.id !== event.target.id);
@@ -118,8 +121,8 @@ window.addEventListener("load", () => {
 
     // Edit
 
-    $btnEditTarea = document.querySelectorAll(".btn-edit");
-    $btnEditTarea.forEach((button) => {
+    $btnEditOp = document.querySelectorAll(".btn-edit");
+    $btnEditOp.forEach((button) => {
       button.addEventListener("click", (event) => {
         $editOpSection.classList.remove("is-hidden");
         $balanceSection.classList.add("is-hidden");
@@ -243,49 +246,6 @@ window.addEventListener("load", () => {
 
   $categoryFilter.addEventListener("input", filterPerCategory);
 
-  /* 
-  $categoryFilter.addEventListener("input", () => {
-    let opFiltered = [];
-
-    if ($categoryFilter.value === "food") {
-      operations.forEach((op) => {
-        if (op.Category === "food") {
-          opFiltered.push(op);
-          paint(opFiltered);
-        }
-      });
-    } else if ($categoryFilter.value === "services") {
-      operations.forEach((op) => {
-        if (op.Category === "services") {
-          opFiltered.push(op);
-          paint(opFiltered);
-        }
-      });
-    } else if ($categoryFilter.value === "outings") {
-      operations.forEach((op) => {
-        if (op.Category === "outings") {
-          opFiltered.push(op);
-          paint(opFiltered);
-        }
-      });
-    } else if ($categoryFilter.value === "education") {
-      operations.forEach((op) => {
-        if (op.Category === "education") {
-          opFiltered.push(op);
-          paint(opFiltered);
-        }
-      });
-    } else if ($categoryFilter.value === "transport") {
-      operations.forEach((op) => {
-        if (op.Category === "transport") {
-          opFiltered.push(op);
-          paint(opFiltered);
-        }
-      });
-    } else {
-      paint(operations);
-    }
-  }); */
 
   var items = [
     { name: "Edward", value: 21 },
@@ -351,18 +311,7 @@ const filterPerCategory = () => {
         return 0;
       });
       paint(orderAlpha);
-    } /* else if ($orderByFilter.value == "higher-amount") {
-      orderAlpha.sort(function (a, b) {
-        if (a.Amount < b.Amount) {
-          return 1;
-        }
-        if (a.Amount > b.Amount) {
-          return -1;
-        }
-        return 0;
-      });
-      paint(orderAlpha);
-    } */
+    } 
   });
 
  
@@ -389,7 +338,7 @@ const formatDate = (day) => {
 };
  */
 
-  // Inputs Validation
+
 
   //  ------------ Inputs & Form Validation -------------  //
 
@@ -503,6 +452,113 @@ const formatDate = (day) => {
     localStorage.setItem("operations", JSON.stringify(operations));
     // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
   });
+
+
+  // ********************************** CATEGORIES ********************************** // 
+
+ 
+
+  let defaultCategories = [
+    { id: crypto.randomUUID(), Name:"Comida" },
+    { id: crypto.randomUUID(), Name:"Servicios" },
+    { id: crypto.randomUUID(), Name:"Salidas" },
+    { id: crypto.randomUUID(), Name:"Educacion" },
+    { id: crypto.randomUUID(), Name:"Trabajo" },
+  ];
+
+  let categories = [...defaultCategories];
+
+const udpateCategories = (array, input) => {
+  input.innerHTML = ""
+
+  if (input === $categoryFilter){
+  input.innerHTML = `<option value="all">Todas</option>`}
+
+  array.forEach((element) => { 
+    input.innerHTML += `<option value="${element.Name}">${element.Name}</option>`
+      });
+
+}
+udpateCategories(categories, $categoryFilter)
+udpateCategories(categories, $categSelect)
+udpateCategories(categories, $editCategSelect)
+
+  // Category Paint
+
+  const categoryPaint = (array) => {
+  $categTableBody.innerHTML = "";
+  array.forEach((element) => { 
+  $categTableBody.innerHTML += `
+  <tr><td>${element.Name}</td>
+  <td><button class="btn-edit-categ button is-info is-small" id=${element.id}>Editar</button>
+  <button class="btn-delete-categ button is-danger is-outlined is-small" id=${element.id}>Eliminar</button></td></tr>`
+    });
+
+    localStorage.setItem("categories", JSON.stringify(categories));
+   JSON.parse(localStorage.getItem("categories") //// no funciona
+    );
+
+// Delete Category
+
+$btnDeleteCategory = document.querySelectorAll(".btn-delete-categ");
+$btnDeleteCategory.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    categories = categories.filter((op) => op.id !== event.target.id);
+    categoryPaint(categories);
+    udpateCategories(categories, $categoryFilter)
+    udpateCategories(categories, $categSelect)
+    udpateCategories(categories, $editCategSelect)
+   // localStorage.setItem("categories", JSON.stringify(operations));
+   // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+  });
+});
+
+  }
+ 
+  categoryPaint(defaultCategories);
+
+
+// New Category
+
+$btnAddCateg.addEventListener('click', (event) => {
+  categories.push({
+    id: crypto.randomUUID(),
+  Name: $newCategInput.value
+  })
+  categoryPaint(categories)
+
+  $categoryFilter.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
+  $categSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
+  $editCategSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
+})
+
+
+
+
+  // Edit
+
+  $btnEditTarea = document.querySelectorAll(".btn-edit");
+  $btnEditTarea.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      $editOpSection.classList.remove("is-hidden");
+      $balanceSection.classList.add("is-hidden");
+      EditOp = operations.find((op) => op.id === event.target.id);
+
+      $editDescriptionInput.value = EditOp.Description;
+      $editAmountInput.value = EditOp.Amount;
+      $editTypeSelect.value = EditOp.Type;
+      $editCategSelect.value = EditOp.Category;
+      $editDateInput.value = EditOp.Date;
+    });
+  });
+
+
+
+
+
+
+
+
 
   //// LO QUE TENIA HECHO ES ESTO //////
 
