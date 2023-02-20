@@ -38,19 +38,20 @@
                     <span class="icon">
                         <i class="fa-solid fa-chart-pie"></i>
                     </span>
-                    <span class="is is-clickable">Balance</span>
+                    <span class="is-clickable" id="btn-balance">Balance</span>
+
                 </div>
                 <div class="navbar-item icon-text has-text-link-light">
                     <span class="icon">
                         <i class="fa-solid fa-tag"></i>
                     </span>
-                    <span class="is is-clickable">Categorias</span>
+                    <span class="is-clickable" id="btn-categ">Categorias</span>
                 </div>
                 <div class="navbar-item icon-text has-text-link-light">
                     <span class="icon">
                         <i class="fa-solid fa-file"></i>
                     </span>
-                    <span class="is is-clickable">Reportes</span>
+                    <span class="is-clickable" id="btn-report">Reportes</span>
                 </div>
             </div>
 
@@ -309,30 +310,48 @@
 
     <!--  CATEGORIAS Section -->
 
-    <section class="section is-medium is-flex is-justify-content-center" id="category-section">
-        <div class="column is-8 ">
+    <section class="section is-medium is-flex is-justify-content-center is-hidden" id="category-section">
+        <div class=" box p-5 column is-8 ">
 
-            <h1 class="title has-text-weight-bold">Editar Categorias</h1>
+            <h1 class="title has-text-weight-bold">Categorias</h1>
 
             <div class="field">
-                <label class="pb-1 pt-4 has-text-weight-bold">Nombre</label>
-                <div class="is-flex">
+                <label class="has-text-weight-bold">Nombre</label>
+                <div class="is-flex mb-6">
                     <input class="input" type="text" name="new-categ" placeholder="0" id="new-categ">
                     <button class="button is-info" id="add-categ">Agregar</button>
                 </div>
-
             </div>
-
             <table class="table is-striped is is-fullwidth " id="categ-table">
                 <tbody id="body-table-categ">
                 </tbody>
             </table>
+        </div>
+    </section>
+<!--  End CATEGORIAS Section -->
+
+<!--  Edit CATEGORIAS Section -->
+
+    <section class="section is-medium is-flex is-justify-content-center is-hidden" id="edit-categ">
+        <div class=" box p-5 column is-6 ">
+
+            <h1 class="title has-text-weight-bold">Editar Nombre</h1>
+
+            <div class="field">
+                <label class="has-text-weight-bold" >Nombre</label>
+                    <input class="input" type="text"  id="edit-categ-name">
+            </div>
+           
+            <div class="buttons mt-6 is-flex is-justify-content-end">
+                <button class="button is-info" id="editcateg-btn-save" type="submit">Guardar cambios</button>
+                <button class="button is-danger is-outlined" id="editcateg-btn-cancel">Cancelar</button>
+            </div>
 
         </div>
 
+        
     </section>
-
-    <!-- End CATEGORIAS Section -->
+    <!-- End Edit CATEGORIAS Section -->
 
 
     <script src="main.js"></script>

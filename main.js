@@ -22,13 +22,20 @@ window.addEventListener("load", () => {
   let $profitTotal = $("#profit-total");
   let $expensesTotal = $("#expenses-total");
   let $balanceTotal = $("#balance-total");
+  const $categSection = $("#category-section");
   const $categTableBody = $("#body-table-categ");
+  const $editCateg = $("#edit-categ");
 
   //buttons
   const $btnNewOp = $("#btn-newop");
   const $btnCancel = $("#btn-cancel");
   const $btnEditCancel = $("#edit-btn-cancel");
   const $btnAddCateg = $("#add-categ");
+  const $btnBalance = $("#btn-balance");
+  const $btnCateg = $("#btn-categ");
+  const $btnReport = $("#btn-report");
+  const $btnEditCategCancel = $("#editcateg-btn-cancel");
+  const $btnEditCategSave = $("#editcateg-btn-save");
 
   //inputs
   const $descriptionInput = $("#description-input");
@@ -44,6 +51,8 @@ window.addEventListener("load", () => {
   const $editTypeSelect = $("#edit-type-select");
   const $editCategSelect = $("#edit-categ-select");
   const $editDateInput = $("#edit-date-input");
+
+  const $editCategNameInput = $("#edit-categ-name");
 
   //filter inputs
   const $typeFilter = $("#type-filter");
@@ -69,7 +78,17 @@ window.addEventListener("load", () => {
     $opSection.classList.add("is-hidden");
   });
 
-  // ********************************** BALANCE ********************************** // 
+  $btnBalance.addEventListener("click", () => {
+    $categSection.classList.add("is-hidden");
+    $balanceSection.classList.remove("is-hidden");
+  });
+
+  $btnCateg.addEventListener("click", () => {
+    $categSection.classList.remove("is-hidden");
+    $balanceSection.classList.add("is-hidden");
+  });
+
+  // ********************************** BALANCE ********************************** //
 
   // Reseat Form inputs
   const reseatInputs = () => {
@@ -114,7 +133,7 @@ window.addEventListener("load", () => {
         console.log("click delete");
         operations = operations.filter((op) => op.id !== event.target.id);
         paint(operations);
-        localStorage.setItem("operations", JSON.stringify(operations));
+        // localStorage.setItem("operations", JSON.stringify(operations));
         generateOperationTable(JSON.parse(localStorage.getItem("operations")));
       });
     });
@@ -126,13 +145,13 @@ window.addEventListener("load", () => {
       button.addEventListener("click", (event) => {
         $editOpSection.classList.remove("is-hidden");
         $balanceSection.classList.add("is-hidden");
-        EditOp = operations.find((op) => op.id === event.target.id);
+        editOp = operations.find((op) => op.id === event.target.id);
 
-        $editDescriptionInput.value = EditOp.Description;
-        $editAmountInput.value = EditOp.Amount;
-        $editTypeSelect.value = EditOp.Type;
-        $editCategSelect.value = EditOp.Category;
-        $editDateInput.value = EditOp.Date;
+        $editDescriptionInput.value = editOp.Description;
+        $editAmountInput.value = editOp.Amount;
+        $editTypeSelect.value = editOp.Type;
+        $editCategSelect.value = editOp.Category;
+        $editDateInput.value = editOp.Date;
       });
     });
   };
@@ -147,23 +166,23 @@ window.addEventListener("load", () => {
   });
 
   $editDescriptionInput.addEventListener("blur", () => {
-    EditOp.Description = $editDescriptionInput.value;
+    editOp.Description = $editDescriptionInput.value;
   });
 
   $editAmountInput.addEventListener("blur", () => {
-    EditOp.Amount = $editAmountInput.value;
+    editOp.Amount = $editAmountInput.value;
   });
 
   $editTypeSelect.addEventListener("blur", () => {
-    EditOp.Type = $editTypeSelect.value;
+    editOp.Type = $editTypeSelect.value;
   });
 
   $editCategSelect.addEventListener("blur", () => {
-    EditOp.Category = $editCategSelect.value;
+    editOp.Category = $editCategSelect.value;
   });
 
   $editDateInput.addEventListener("blur", () => {
-    EditOp.Date = $editDateInput.value;
+    editOp.Date = $editDateInput.value;
   });
 
   // EDIT Submit
@@ -246,29 +265,6 @@ window.addEventListener("load", () => {
 
   $categoryFilter.addEventListener("input", filterPerCategory);
 
-
-  var items = [
-    { name: "Edward", value: 21 },
-    { name: "Sharpe", value: 37 },
-    { name: "And", value: 45 },
-    { name: "The", value: -12 },
-    { name: "Magnetic", value: 13 },
-    { name: "Zeros", value: 37 },
-  ];
-  items.sort(function (a, b) {
-    if (a.name > b.name) {
-      return 1;
-    }
-    if (a.name < b.name) {
-      return -1;
-    }
-    // a must be equal to b
-    return 0;
-  });
-
-  console.log(items);
-
-
   /* 
 const filterPerCategory = () => {
   // let opFiltered = [];
@@ -286,7 +282,7 @@ const filterPerCategory = () => {
   // Order per Status
 
   $orderByFilter.addEventListener("input", () => {
-    console.log(operations)
+    console.log(operations);
     let orderAlpha = [...operations];
 
     if ($orderByFilter.value === "a-z") {
@@ -311,10 +307,8 @@ const filterPerCategory = () => {
         return 0;
       });
       paint(orderAlpha);
-    } 
+    }
   });
-
- 
 
   // Clear Filters
   /* 
@@ -337,8 +331,6 @@ const formatDate = (day) => {
   return newDate.join("-");
 };
  */
-
-
 
   //  ------------ Inputs & Form Validation -------------  //
 
@@ -453,103 +445,120 @@ const formatDate = (day) => {
     // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
   });
 
-
-  // ********************************** CATEGORIES ********************************** // 
-
- 
+  // ********************************** CATEGORIES ********************************** //
 
   let defaultCategories = [
-    { id: crypto.randomUUID(), Name:"Comida" },
-    { id: crypto.randomUUID(), Name:"Servicios" },
-    { id: crypto.randomUUID(), Name:"Salidas" },
-    { id: crypto.randomUUID(), Name:"Educacion" },
-    { id: crypto.randomUUID(), Name:"Trabajo" },
+    { id: crypto.randomUUID(), Name: "Comida" },
+    { id: crypto.randomUUID(), Name: "Servicios" },
+    { id: crypto.randomUUID(), Name: "Salidas" },
+    { id: crypto.randomUUID(), Name: "Educacion" },
+    { id: crypto.randomUUID(), Name: "Trabajo" },
   ];
 
   let categories = [...defaultCategories];
 
-const udpateCategories = (array, input) => {
-  input.innerHTML = ""
+  const udpateCategories = (array, input) => {
+    input.innerHTML = "";
 
-  if (input === $categoryFilter){
-  input.innerHTML = `<option value="all">Todas</option>`}
+    if (input === $categoryFilter) {
+      input.innerHTML = `<option value="all">Todas</option>`;
+    }
 
-  array.forEach((element) => { 
-    input.innerHTML += `<option value="${element.Name}">${element.Name}</option>`
-      });
-
-}
-udpateCategories(categories, $categoryFilter)
-udpateCategories(categories, $categSelect)
-udpateCategories(categories, $editCategSelect)
+    array.forEach((element) => {
+      input.innerHTML += `<option value="${element.Name}">${element.Name}</option>`;
+    });
+  };
+  udpateCategories(categories, $categoryFilter);
+  udpateCategories(categories, $categSelect);
+  udpateCategories(categories, $editCategSelect);
 
   // Category Paint
 
   const categoryPaint = (array) => {
-  $categTableBody.innerHTML = "";
-  array.forEach((element) => { 
-  $categTableBody.innerHTML += `
+    $categTableBody.innerHTML = "";
+    array.forEach((element) => {
+      $categTableBody.innerHTML += `
   <tr><td>${element.Name}</td>
   <td><button class="btn-edit-categ button is-info is-small" id=${element.id}>Editar</button>
-  <button class="btn-delete-categ button is-danger is-outlined is-small" id=${element.id}>Eliminar</button></td></tr>`
+  <button class="btn-delete-categ button is-danger is-outlined is-small" id=${element.id}>Eliminar</button></td></tr>`;
     });
 
     localStorage.setItem("categories", JSON.stringify(categories));
-   JSON.parse(localStorage.getItem("categories") //// no funciona
-    );
 
-// Delete Category
+    // Delete Category
 
-$btnDeleteCategory = document.querySelectorAll(".btn-delete-categ");
-$btnDeleteCategory.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    categories = categories.filter((op) => op.id !== event.target.id);
-    categoryPaint(categories);
-    udpateCategories(categories, $categoryFilter)
-    udpateCategories(categories, $categSelect)
-    udpateCategories(categories, $editCategSelect)
-   // localStorage.setItem("categories", JSON.stringify(operations));
-   // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+    $btnDeleteCategory = document.querySelectorAll(".btn-delete-categ");
+    $btnDeleteCategory.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        categories = categories.filter((op) => op.id !== event.target.id);
+        categoryPaint(categories);
+        udpateCategories(categories, $categoryFilter);
+        udpateCategories(categories, $categSelect);
+        udpateCategories(categories, $editCategSelect);
+
+        localStorage.setItem("categories", JSON.stringify(categories));
+        const getCategFromLocalStorage = JSON.parse(
+          localStorage.getItem("categories")
+        );
+        categoryPaint(getCategFromLocalStorage);
+      });
+    });
+
+    // Edit Category
+
+    $btnEditCategory = document.querySelectorAll(".btn-edit-categ");
+    $btnEditCategory.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        $categSection.classList.add("is-hidden");
+        $balanceSection.classList.add("is-hidden");
+        $editCateg.classList.remove("is-hidden");
+
+        editCategory = categories.find((categ) => categ.id === event.target.id);
+        $editCategNameInput.value = editCategory.Name;
+      });
+    });
+  };
+
+  $btnEditCategCancel.addEventListener("click", (event) => {
+    event.preventDefault();
+    $editCateg.classList.add("is-hidden");
+    $categSection.classList.remove("is-hidden");
   });
-});
 
-  }
- 
+  $editCategNameInput.addEventListener("blur", () => {
+    editCategory.Name = $editCategNameInput.value;
+  });
+
+  // Edit Category Submit
+
+  $btnEditCategSave.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    $editCateg.classList.add("is-hidden");
+    $categSection.classList.remove("is-hidden");
+    categoryPaint(categories);
+    udpateCategories(categories, $categoryFilter);
+    udpateCategories(categories, $categSelect);
+    udpateCategories(categories, $editCategSelect);
+
+    localStorage.setItem("operations", JSON.stringify(operations));
+    //generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+  });
+
   categoryPaint(defaultCategories);
 
+  // New Category
 
-// New Category
-
-$btnAddCateg.addEventListener('click', (event) => {
-  categories.push({
-    id: crypto.randomUUID(),
-  Name: $newCategInput.value
-  })
-  categoryPaint(categories)
-
-  $categoryFilter.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
-  $categSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
-  $editCategSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`
-})
-
-
-
-
-  // Edit
-
-  $btnEditTarea = document.querySelectorAll(".btn-edit");
-  $btnEditTarea.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      $editOpSection.classList.remove("is-hidden");
-      $balanceSection.classList.add("is-hidden");
-      EditOp = operations.find((op) => op.id === event.target.id);
-
-      $editDescriptionInput.value = EditOp.Description;
-      $editAmountInput.value = EditOp.Amount;
-      $editTypeSelect.value = EditOp.Type;
-      $editCategSelect.value = EditOp.Category;
-      $editDateInput.value = EditOp.Date;
+  $btnAddCateg.addEventListener("click", (event) => {
+    categories.push({
+      id: crypto.randomUUID(),
+      Name: $newCategInput.value,
     });
+    categoryPaint(categories);
+
+    $categoryFilter.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`;
+    $categSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`;
+    $editCategSelect.innerHTML += `<option value="${$newCategInput.value}">${$newCategInput.value}</option>`;
   });
 
 
@@ -557,9 +566,7 @@ $btnAddCateg.addEventListener('click', (event) => {
 
 
 
-
-
-
+  
   //// LO QUE TENIA HECHO ES ESTO //////
 
   /* const totalBalance = () => {
