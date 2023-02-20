@@ -76,7 +76,7 @@
                             <p class="has-text-danger" id="expenses-total">-$</p>
                         </div>
                         <div class="is-flex is-justify-content-space-between has-text-weight-bold pt-5">
-                            <p class="is-size-5"  >Total</p>
+                            <p class="is-size-5">Total</p>
                             <p id="balance-total">$</p>
                         </div>
                     </div>
@@ -89,40 +89,42 @@
                             <div class="control is-flex is-flex-direction-column">
                                 <label class="pb-1">Tipo</label>
                                 <div class="select is-fullwidth">
-                                    <select>
-                                        <option>Todos</option>
-                                        <option>Gasto</option>
-                                        <option>Ganancia</option>
+                                    <select id="type-filter">
+                                        <option value="all">Todos</option>
+                                        <option value="expense">Gasto</option>
+                                        <option value="profit">Ganancia</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="control is-flex is-flex-direction-column">
                                 <label class="pb-1 pt-3">Categoria</label>
                                 <div class="select is-fullwidth">
-                                    <select>
-                                        <option>Todas</option>
-                                        <option>Comida</option>
-                                        <option>Servicios</option>
-                                        <option>Salidas</option>
-                                        <option>Educación</option>
-                                        <option>Transporte</option>
+                                    <select id="category-filter">
+                                        <option value="all">Todas</option>
+                                        <option value="food">Comida</option>
+                                        <option value="services">Servicios</option>
+                                        <option value="outings">Salidas</option>
+                                        <option value="education">Educación</option>
+                                        <option value="transport">Transporte</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="control is-flex is-flex-direction-column">
                                 <label class="pb-1 pt-3">Desde</label>
-                                <input type="date" class="input is-normal">
+                                <input type="date" class="input is-normal" id="date-filter">
                             </div>
 
                             <div class="control is-flex is-flex-direction-column">
                                 <label class="pb-1 pt-3">Ordenar por</label>
                                 <div class="select is-fullwidth pb-6">
-                                    <select>
-                                        <option>Más reciente</option>
-                                        <option>Menos reciente</option>
-                                        <option>Mayor monto</option>
-                                        <option>Menor monto</option>
+                                    <select id="orderby-filter">
+                                        <option value="most-recent">Más reciente</option>
+                                        <option value="less-recent">Menos reciente</option>
+                                        <option value="higher-amount">Mayor monto</option>
+                                        <option value="lower-amount">Menor monto</option>
+                                        <option value="a-z">A/Z</option>
+                                        <option value="z-a">Z/A</option>
                                     </select>
                                 </div>
                             </div>
@@ -145,17 +147,17 @@
                         </div>
                         <table class="table is-narrow is-fullwidth mt-5 is-hidden" id="op-table">
                             <thead>
-                              <tr>
-                                <th>Descripción</th>
-                                <th>Categoria</th>
-                                <th>Monto</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                              </tr>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Categoria</th>
+                                    <th>Monto</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
                             </thead>
                             <tbody id="table-body">
                             </tbody>
-                            </table>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -170,59 +172,60 @@
         <div class="column is-8 ">
             <form class="box p-5 has-text-weight-bold" id="op-form">
                 <h1 class="title has-text-weight-bold">Nueva Operación</h1>
-              
-                    <div class="field">
-                        <label class="pb-1 pt-4">Descripción</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <textarea class="textarea" type="text" rows="2" name="description" id="description-input"></textarea>
-                        </div>
-                        <p class="description-error"></p>
-                    </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Monto</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <input class="input" type="text" name="amount" placeholder="0" id="amount-input">
-                        </div>
-                        <p class="amount-error"></p>
+                <div class="field">
+                    <label class="pb-1 pt-4">Descripción</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <textarea class="textarea" type="text" rows="2" name="description"
+                            id="description-input"></textarea>
                     </div>
-                    <div class="field">
-                        <label class="pb-1 pt-4">Tipo</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <div class="select is-fullwidth">
-                                <select id="type-select" name="type">
-                                    <option value="expense">Gasto</option>
-                                    <option value="profit">Ganancia</option>
-                                </select>
-                                <p class="type-error"></p>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="description-error"></p>
+                </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Categoría</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <div class="select is-fullwidth">
-                                <select id="categ-select" name="category">
-                                    <option value="food">Comida</option>
-                                    <option value="services">Servicios</option>
-                                    <option value="outings">Salidas</option>
-                                    <option value="education">Educación</option>
-                                    <option value="transport">Transporte</option>
-                                </select>
-                                <p class="category-error"></p>
-                            </div>
+                <div class="field">
+                    <label class="pb-1 pt-4">Monto</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <input class="input" type="text" name="amount" placeholder="0" id="amount-input">
+                    </div>
+                    <p class="amount-error"></p>
+                </div>
+                <div class="field">
+                    <label class="pb-1 pt-4">Tipo</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <div class="select is-fullwidth">
+                            <select id="type-select" name="type">
+                                <option value="expense">Gasto</option>
+                                <option value="profit">Ganancia</option>
+                            </select>
+                            <p class="type-error"></p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Fecha</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <input type="date" class="input is-normal" name="date" id="date-input">
+                <div class="field">
+                    <label class="pb-1 pt-4">Categoría</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <div class="select is-fullwidth">
+                            <select id="categ-select" name="category">
+                                <option value="food">Comida</option>
+                                <option value="services">Servicios</option>
+                                <option value="outings">Salidas</option>
+                                <option value="education">Educación</option>
+                                <option value="transport">Transporte</option>
+                            </select>
+                            <p class="category-error"></p>
                         </div>
-                        <p class="date-error"></p>
                     </div>
-                
+                </div>
+
+                <div class="field">
+                    <label class="pb-1 pt-4">Fecha</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <input type="date" class="input is-normal" name="date" id="date-input">
+                    </div>
+                    <p class="date-error"></p>
+                </div>
+
                 <div class="buttons mt-6 is-flex is-justify-content-end">
                     <button class="button is-info" id="btn-add" type="submit">Agregar</button>
                     <button class="button is-danger is-outlined" id="btn-cancel">Cancelar</button>
@@ -235,65 +238,66 @@
 
     <!-- End NEW OP Section -->
 
-     <!-- Edit OP Section -->
+    <!-- Edit OP Section -->
 
-     <section class="section is-medium is-flex is-justify-content-center is-hidden" id="edit-op-section">
+    <section class="section is-medium is-flex is-justify-content-center is-hidden" id="edit-op-section">
         <div class="column is-8 ">
             <form class="box p-5 has-text-weight-bold" id="edit-op-form">
                 <h1 class="title has-text-weight-bold">Editar Operación</h1>
-              
-                    <div class="field">
-                        <label class="pb-1 pt-4">Descripción</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <textarea class="textarea" type="text" rows="2" name="description" id="edit-description-input"></textarea>
-                        </div>
-                        <p class="description-error"></p>
-                    </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Monto</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <input class="input" type="text" name="amount" placeholder="0" id="edit-amount-input">
-                        </div>
-                        <p class="amount-error"></p>
+                <div class="field">
+                    <label class="pb-1 pt-4">Descripción</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <textarea class="textarea" type="text" rows="2" name="description"
+                            id="edit-description-input"></textarea>
                     </div>
-                    <div class="field">
-                        <label class="pb-1 pt-4">Tipo</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <div class="select is-fullwidth">
-                                <select id="edit-type-select" name="type">
-                                    <option value="expense">Gasto</option>
-                                    <option value="profit">Ganancia</option>
-                                </select>
-                                <p class="type-error"></p>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="description-error"></p>
+                </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Categoría</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <div class="select is-fullwidth">
-                                <select id="edit-categ-select" name="category">
-                                    <option value="food">Comida</option>
-                                    <option value="services">Servicios</option>
-                                    <option value="outings">Salidas</option>
-                                    <option value="education">Educación</option>
-                                    <option value="transport">Transporte</option>
-                                </select>
-                                <p class="category-error"></p>
-                            </div>
+                <div class="field">
+                    <label class="pb-1 pt-4">Monto</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <input class="input" type="text" name="amount" placeholder="0" id="edit-amount-input">
+                    </div>
+                    <p class="amount-error"></p>
+                </div>
+                <div class="field">
+                    <label class="pb-1 pt-4">Tipo</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <div class="select is-fullwidth">
+                            <select id="edit-type-select" name="type">
+                                <option value="expense">Gasto</option>
+                                <option value="profit">Ganancia</option>
+                            </select>
+                            <p class="type-error"></p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="field">
-                        <label class="pb-1 pt-4">Fecha</label>
-                        <div class="control is-flex is-flex-direction-column">
-                            <input type="date" class="input is-normal" name="date" id="edit-date-input">
+                <div class="field">
+                    <label class="pb-1 pt-4">Categoría</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <div class="select is-fullwidth">
+                            <select id="edit-categ-select" name="category">
+                                <option value="food">Comida</option>
+                                <option value="services">Servicios</option>
+                                <option value="outings">Salidas</option>
+                                <option value="education">Educación</option>
+                                <option value="transport">Transporte</option>
+                            </select>
+                            <p class="category-error"></p>
                         </div>
-                        <p class="date-error"></p>
                     </div>
-                
+                </div>
+
+                <div class="field">
+                    <label class="pb-1 pt-4">Fecha</label>
+                    <div class="control is-flex is-flex-direction-column">
+                        <input type="date" class="input is-normal" name="date" id="edit-date-input">
+                    </div>
+                    <p class="date-error"></p>
+                </div>
+
                 <div class="buttons mt-6 is-flex is-justify-content-end">
                     <button class="button is-info" id="edit-btn-save" type="submit">Guardar cambios</button>
                     <button class="button is-danger is-outlined" id="edit-btn-cancel">Cancelar</button>

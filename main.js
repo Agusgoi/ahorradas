@@ -4,7 +4,7 @@ window.addEventListener("load", () => {
   // --------------- VARIABLES ---------------
 
   let operations = [];
-  let EditToDo = {};
+  let EditOp = {};
 
   // Regex
   const regExpAlpha = /^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{4,20}$/;
@@ -41,6 +41,12 @@ window.addEventListener("load", () => {
   const $editTypeSelect = $("#edit-type-select");
   const $editCategSelect = $("#edit-categ-select");
   const $editDateInput = $("#edit-date-input");
+
+  //filter inputs
+  const $typeFilter = $("#type-filter");
+  const $categoryFilter = $("#category-filter");
+  const $dateFilter = $("#date-filter");
+  const $orderByFilter = $("#orderby-filter");
 
   //errors
   const $descriptionError = $(".description-error");
@@ -105,6 +111,8 @@ window.addEventListener("load", () => {
         console.log("click delete");
         operations = operations.filter((op) => op.id !== event.target.id);
         paint(operations);
+        localStorage.setItem("operations", JSON.stringify(operations));
+        generateOperationTable(JSON.parse(localStorage.getItem("operations")));
       });
     });
 
@@ -115,14 +123,13 @@ window.addEventListener("load", () => {
       button.addEventListener("click", (event) => {
         $editOpSection.classList.remove("is-hidden");
         $balanceSection.classList.add("is-hidden");
-        EditToDo = operations.find((op) => op.id === event.target.id);
+        EditOp = operations.find((op) => op.id === event.target.id);
 
-        $editDescriptionInput.value = EditToDo.Description;
-        $editAmountInput.value = EditToDo.Amount;
-        $editTypeSelect.value = EditToDo.Type;
-        $editCategSelect.value = EditToDo.Category;
-        $editDateInput.value = EditToDo.Date;
-        console.log(EditToDo);
+        $editDescriptionInput.value = EditOp.Description;
+        $editAmountInput.value = EditOp.Amount;
+        $editTypeSelect.value = EditOp.Type;
+        $editCategSelect.value = EditOp.Category;
+        $editDateInput.value = EditOp.Date;
       });
     });
   };
@@ -137,23 +144,23 @@ window.addEventListener("load", () => {
   });
 
   $editDescriptionInput.addEventListener("blur", () => {
-    EditToDo.Description = $editDescriptionInput.value;
+    EditOp.Description = $editDescriptionInput.value;
   });
 
   $editAmountInput.addEventListener("blur", () => {
-    EditToDo.Amount = $editAmountInput.value;
+    EditOp.Amount = $editAmountInput.value;
   });
 
   $editTypeSelect.addEventListener("blur", () => {
-    EditToDo.Type = $editTypeSelect.value;
+    EditOp.Type = $editTypeSelect.value;
   });
 
   $editCategSelect.addEventListener("blur", () => {
-    EditToDo.Category = $editCategSelect.value;
+    EditOp.Category = $editCategSelect.value;
   });
 
   $editDateInput.addEventListener("blur", () => {
-    EditToDo.Date = $editDateInput.value;
+    EditOp.Date = $editDateInput.value;
   });
 
   // EDIT Submit
@@ -164,9 +171,12 @@ window.addEventListener("load", () => {
     $balanceSection.classList.remove("is-hidden");
     $opTable.classList.remove("is-hidden");
     paint(operations);
+
+    localStorage.setItem("operations", JSON.stringify(operations));
+    //generateOperationTable(JSON.parse(localStorage.getItem("operations")));
   });
 
-  // Balance Functions
+  // Balance Function
 
   const totalSum = (array) => {
     let profitTotal = 0;
@@ -184,6 +194,200 @@ window.addEventListener("load", () => {
     $expensesTotal.innerText = `$ ${expenseTotal}`;
     $balanceTotal.innerText = `$ ${profitTotal + expenseTotal}`;
   };
+
+  //  ------------ FILTERS -------------  //
+
+  // Filter per Type
+
+  /*   const filterPerType = () => {
+    let opFiltered = [];
+    $typeFilter.addEventListener("input", () => {
+      if ($typeFilter.value !== "all") {
+        opFiltered = operations.filter((op) => op.Type === $typeFilter.value);
+        paint(opFiltered);
+      } else {
+        paint(operations);
+      }
+    });
+  };
+
+  filterPerType(operations);
+
+  */
+  let opFiltered = [];
+  const filterPerType = () => {
+    //let opFiltered = [];
+    if ($typeFilter.value !== "all") {
+      opFiltered = operations.filter((op) => op.Type === $typeFilter.value);
+      paint(opFiltered);
+    } else {
+      paint(operations);
+    }
+  };
+
+  $typeFilter.addEventListener("input", filterPerType);
+
+  // Filter per Category
+
+  const filterPerCategory = () => {
+    // let opFiltered = [];
+    if ($categoryFilter.value !== "all") {
+      opFiltered = operations.filter(
+        (op) => op.Category === $categoryFilter.value
+      );
+      paint(opFiltered);
+    } else {
+      paint(operations);
+    }
+  };
+
+  $categoryFilter.addEventListener("input", filterPerCategory);
+
+  /* 
+  $categoryFilter.addEventListener("input", () => {
+    let opFiltered = [];
+
+    if ($categoryFilter.value === "food") {
+      operations.forEach((op) => {
+        if (op.Category === "food") {
+          opFiltered.push(op);
+          paint(opFiltered);
+        }
+      });
+    } else if ($categoryFilter.value === "services") {
+      operations.forEach((op) => {
+        if (op.Category === "services") {
+          opFiltered.push(op);
+          paint(opFiltered);
+        }
+      });
+    } else if ($categoryFilter.value === "outings") {
+      operations.forEach((op) => {
+        if (op.Category === "outings") {
+          opFiltered.push(op);
+          paint(opFiltered);
+        }
+      });
+    } else if ($categoryFilter.value === "education") {
+      operations.forEach((op) => {
+        if (op.Category === "education") {
+          opFiltered.push(op);
+          paint(opFiltered);
+        }
+      });
+    } else if ($categoryFilter.value === "transport") {
+      operations.forEach((op) => {
+        if (op.Category === "transport") {
+          opFiltered.push(op);
+          paint(opFiltered);
+        }
+      });
+    } else {
+      paint(operations);
+    }
+  }); */
+
+  var items = [
+    { name: "Edward", value: 21 },
+    { name: "Sharpe", value: 37 },
+    { name: "And", value: 45 },
+    { name: "The", value: -12 },
+    { name: "Magnetic", value: 13 },
+    { name: "Zeros", value: 37 },
+  ];
+  items.sort(function (a, b) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  });
+
+  console.log(items);
+
+
+  /* 
+const filterPerCategory = () => {
+  // let opFiltered = [];
+     if ($categoryFilter.value !== "all") {
+       opFiltered = operations.filter((op) => op.Category === $categoryFilter.value);
+       paint(opFiltered);
+     } else {
+       paint(operations);
+     }
+   };
+
+ $categoryFilter.addEventListener("input", filterPerCategory);
+ */
+
+  // Order per Status
+
+  $orderByFilter.addEventListener("input", () => {
+    console.log(operations)
+    let orderAlpha = [...operations];
+
+    if ($orderByFilter.value === "a-z") {
+      orderAlpha.sort(function (a, b) {
+        if (a.Description > b.Description) {
+          return 1;
+        }
+        if (a.Description < b.Description) {
+          return -1;
+        }
+        return 0;
+      });
+      paint(orderAlpha);
+    } else if ($orderByFilter.value === "z-a") {
+      orderAlpha.sort(function (a, b) {
+        if (a.Description < b.Description) {
+          return 1;
+        }
+        if (a.Description > b.Description) {
+          return -1;
+        }
+        return 0;
+      });
+      paint(orderAlpha);
+    } /* else if ($orderByFilter.value == "higher-amount") {
+      orderAlpha.sort(function (a, b) {
+        if (a.Amount < b.Amount) {
+          return 1;
+        }
+        if (a.Amount > b.Amount) {
+          return -1;
+        }
+        return 0;
+      });
+      paint(orderAlpha);
+    } */
+  });
+
+ 
+
+  // Clear Filters
+  /* 
+$btnClearFilters.addEventListener("click", () => {
+  paint(tareas);
+}); */
+
+  // DATE FUNCTIONS
+
+  /* let day = new Date();
+$("#dateOperation").value =
+  day.getFullYear() +
+  "-" +
+  ("0" + (day.getMonth() + 1)).slice(-2) +
+  "-" +
+  ("0" + day.getDate()).slice(-2);
+
+const formatDate = (day) => {
+  const newDate = day.split("-").reverse();
+  return newDate.join("-");
+};
+ */
 
   // Inputs Validation
 
@@ -295,51 +499,12 @@ window.addEventListener("load", () => {
     }
 
     totalSum(operations);
+
+    localStorage.setItem("operations", JSON.stringify(operations));
+    // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
   });
 
   //// LO QUE TENIA HECHO ES ESTO //////
-
-  //console.log ($amountInput.value)
-
-  /*  const amountTotals = () => {
-  if ($typeSelect.value === "profit") {
-    $amountInput.addEventListener ("input", (event)=>{
-      $profitTotal.innerText = event.target.value;
-      
-    })
-  }else{
-    $amountInput.addEventListener ("input", (event)=>{
-      $expensesTotal.innerText = event.target.value;
-      console.log ($expensesTotal)
-    } )
-  }}
-
-  */
-
-  /*   const amountTotals = () => {
-    $amountInput.addEventListener ("input", (event)=>{
-      if ($typeSelect.value === "expense") {
-        $expensesTotal.innerText += event.target.value;
-      }else {
-        $profitTotal.innerText += event.target.value;
-      }})
-    
-    } 
-
-
-    amountTotals (); */
-
-  /*    
-$amountInput.addEventListener ("change", (event)=>{
-      if ($typeSelect.value === "expense") {
-        $expensesTotal.innerText += event.target.value;
-      }else{
-        $profitTotal.innerText += event.target.value;
-      }})
-
-  console.log ($profitTotal.value)
-  console.log ($expensesTotal.value)
- */
 
   /* const totalBalance = () => {
     const { ganancias, gastos, balance } = obtenerBalance(operaciones)
@@ -374,6 +539,13 @@ $amountInput.addEventListener ("change", (event)=>{
 2. Luego hago cambios nuevos en la rama de desarrollo, git commit, git push, y si esta todo bien, vuelvo a main
 3. Para en main, hago git merge rama-de-desarrollo
  */
+
+  // PENDIENTES
+  // no pude aplicar validacion ala fecha
+  // no pude filtrar por fecha
+  // cambiar las categorias a espa;ol cuando hago el print
+  // localstorage, se guardan las op en el array pero cuando hago refresh pierdo la info
+  // los filtros funcionan pero no se aplican encadenados
 
   //estos cierran la funcion window-load
 });
