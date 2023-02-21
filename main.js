@@ -201,7 +201,7 @@ window.addEventListener("load", () => {
     paint(operations);
 
     localStorage.setItem("operations", JSON.stringify(operations));
-    //generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+
   });
 
   // Balance Function
@@ -227,21 +227,7 @@ window.addEventListener("load", () => {
 
   // Filter per Type
 
-  /*   const filterPerType = () => {
-    let opFiltered = [];
-    $typeFilter.addEventListener("input", () => {
-      if ($typeFilter.value !== "all") {
-        opFiltered = operations.filter((op) => op.Type === $typeFilter.value);
-        paint(opFiltered);
-      } else {
-        paint(operations);
-      }
-    });
-  };
 
-  filterPerType(operations);
-
-  */
   let opFiltered = [];
   const filterPerType = () => {
     //let opFiltered = [];
@@ -271,19 +257,7 @@ window.addEventListener("load", () => {
 
   $categoryFilter.addEventListener("input", filterPerCategory);
 
-  /* 
-const filterPerCategory = () => {
-  // let opFiltered = [];
-     if ($categoryFilter.value !== "all") {
-       opFiltered = operations.filter((op) => op.Category === $categoryFilter.value);
-       paint(opFiltered);
-     } else {
-       paint(operations);
-     }
-   };
 
- $categoryFilter.addEventListener("input", filterPerCategory);
- */
 
   // Order per Status
 
@@ -316,27 +290,7 @@ const filterPerCategory = () => {
     }
   });
 
-  // Clear Filters
-  /* 
-$btnClearFilters.addEventListener("click", () => {
-  paint(tareas);
-}); */
-
-  // DATE FUNCTIONS
-
-  /* let day = new Date();
-$("#dateOperation").value =
-  day.getFullYear() +
-  "-" +
-  ("0" + (day.getMonth() + 1)).slice(-2) +
-  "-" +
-  ("0" + day.getDate()).slice(-2);
-
-const formatDate = (day) => {
-  const newDate = day.split("-").reverse();
-  return newDate.join("-");
-};
- */
+ 
 
   //  ------------ Inputs & Form Validation -------------  //
 
@@ -448,7 +402,7 @@ const formatDate = (day) => {
     totalSum(operations);
 
     localStorage.setItem("operations", JSON.stringify(operations));
-    // generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+   
   });
 
   // ********************************** CATEGORIES ********************************** //
@@ -548,7 +502,7 @@ const formatDate = (day) => {
     udpateCategories(categories, $editCategSelect);
 
     localStorage.setItem("operations", JSON.stringify(operations));
-    //generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+
   });
 
   categoryPaint(defaultCategories);
@@ -572,8 +526,6 @@ const formatDate = (day) => {
 // ********************************** REPORTS ********************************** //
 
 
-// funcion que reicbe array operaciones, con argumento de array y categr, crear variable y que ahi vaya sumando
-//no solo hay que sumar 
 
 const profitPerCategory = (array, category) => {
   let profitCateg = 0;
@@ -586,7 +538,6 @@ array.forEach((element) => {
   };
 });
 };
-
 
 
 profitPerCategory (operations, 'comida')
@@ -606,6 +557,21 @@ profitPerCategory (operations, 'comida')
   // Reportes
 
 
+ // DATE FUNCTIONS
+
+  /* let day = new Date();
+$("#dateOperation").value =
+  day.getFullYear() +
+  "-" +
+  ("0" + (day.getMonth() + 1)).slice(-2) +
+  "-" +
+  ("0" + day.getDate()).slice(-2);
+
+const formatDate = (day) => {
+  const newDate = day.split("-").reverse();
+  return newDate.join("-");
+};
+ */
 
 
   //estos cierran la funcion window-load
