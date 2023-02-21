@@ -102,7 +102,7 @@
                                 <div class="select is-fullwidth">
                                     <select id="category-filter">
                                         <option value="all">Todas</option>
-                                        
+
                                     </select>
                                 </div>
                             </div>
@@ -204,12 +204,6 @@
                     <div class="control is-flex is-flex-direction-column">
                         <div class="select is-fullwidth">
                             <select id="categ-select" name="category">
-                                 <!--  
-                                <option value="Comida">Comida</option>
-                                <option value="services">Servicios</option>
-                                <option value="outings">Salidas</option>
-                                <option value="education">Educación</option>
-                                <option value="transport">Transporte</option>-->
                             </select>
                             <p class="category-error"></p>
                         </div>
@@ -328,9 +322,9 @@
             </table>
         </div>
     </section>
-<!--  End CATEGORIAS Section -->
+    <!--  End CATEGORIAS Section -->
 
-<!--  Edit CATEGORIAS Section -->
+    <!--  Edit CATEGORIAS Section -->
 
     <section class="section is-medium is-flex is-justify-content-center is-hidden" id="edit-categ">
         <div class=" box p-5 column is-6 ">
@@ -338,10 +332,10 @@
             <h1 class="title has-text-weight-bold">Editar Nombre</h1>
 
             <div class="field">
-                <label class="has-text-weight-bold" >Nombre</label>
-                    <input class="input" type="text"  id="edit-categ-name">
+                <label class="has-text-weight-bold">Nombre</label>
+                <input class="input" type="text" id="edit-categ-name">
             </div>
-           
+
             <div class="buttons mt-6 is-flex is-justify-content-end">
                 <button class="button is-info" id="editcateg-btn-save" type="submit">Guardar cambios</button>
                 <button class="button is-danger is-outlined" id="editcateg-btn-cancel">Cancelar</button>
@@ -349,10 +343,120 @@
 
         </div>
 
-        
+
     </section>
     <!-- End Edit CATEGORIAS Section -->
 
+
+    <!--  REPORTES Section -->
+
+    <section class="section is-medium is-flex is-justify-content-center is-hidden" id="report-section">
+
+        <div class="box p-5 column is-8">
+            <h1 class="title has-text-weight-bold">Reportes</h1>
+
+            <div class="m-6">
+                <h2 class="title is-size-4">Resumen</h2>
+                <table class="table is-fullwidth">
+                    <tbody class="is-flex-direction-column">
+                        <tr>
+                            <th>Categoria con mayor ganancia</th>
+                        </tr>
+                        <tr>
+                            <th>Categoria con mayor gasto</th>
+                        </tr>
+                        <tr>
+                            <th>Categoria con mayor ganancia</th>
+                        </tr>
+                        <tr>
+                            <th>Mes con mayor ganancia</th>
+                        </tr>
+                        <tr>
+                            <th>Mes con mayor gasto</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="m-6">
+                <h2 class="title is-size-4">Totales por Categoria</h2>
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>
+                                Categoria
+                            </th>
+                            <th>
+                                Ganancia
+                            </th>
+                            <th>
+                                Gastos
+                            </th>
+                            <th>
+                                Balance
+                            </th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <th>Comida</th>
+                        </tr>
+                        <tr>
+                            <th>Transporte</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="m-6">
+                <h2 class="title is-size-4">Totales por Mes</h2>
+                <table class="table is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>
+                                Categoria
+                            </th>
+                            <th>
+                                Ganancia
+                            </th>
+                            <th>
+                                Gastos
+                            </th>
+                            <th>
+                                Balance
+                            </th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <th>11/2022</th>
+                        </tr>
+                        <tr>
+                            <th>01/2023</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+        </div>
+
+
+    </section>
+
+
+    <!--  Edit REPORTES Section -->
 
     <script src="main.js"></script>
     </script>

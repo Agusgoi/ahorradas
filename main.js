@@ -25,6 +25,7 @@ window.addEventListener("load", () => {
   const $categSection = $("#category-section");
   const $categTableBody = $("#body-table-categ");
   const $editCateg = $("#edit-categ");
+  const $reportSection = $("#report-section");
 
   //buttons
   const $btnNewOp = $("#btn-newop");
@@ -85,6 +86,11 @@ window.addEventListener("load", () => {
 
   $btnCateg.addEventListener("click", () => {
     $categSection.classList.remove("is-hidden");
+    $balanceSection.classList.add("is-hidden");
+  });
+
+  $btnReport.addEventListener("click", () => {
+    $reportSection.classList.remove("is-hidden");
     $balanceSection.classList.add("is-hidden");
   });
 
@@ -563,45 +569,33 @@ const formatDate = (day) => {
 
 
 
+// ********************************** REPORTS ********************************** //
+
+
+// funcion que reicbe array operaciones, con argumento de array y categr, crear variable y que ahi vaya sumando
+//no solo hay que sumar 
+
+const profitPerCategory = (array, category) => {
+  let profitCateg = 0;
+
+array.forEach((element) => {
+  console.log('entre al array')
+  console.log(element.Category)
+  if (element.Category === category) {
+    profitCateg = profitCateg += Number(element.Amount);
+  };
+});
+};
 
 
 
-  
-  //// LO QUE TENIA HECHO ES ESTO //////
-
-  /* const totalBalance = () => {
-    const { ganancias, gastos, balance } = obtenerBalance(operaciones)
-    $('#ganancias').innerHTML = `+$${Math.abs(ganancias)}`
-    $('#gastos').innerHTML = `-$${Math.abs(gastos)}`
-  
-    $('#balance').classList.remove('has-text-danger', 'has-text-success')
-    let operador = ''
-  
-    if (balance > 0) {
-      $('#balance').classList.add('has-text-success')
-      operador = '+'
-    } else if (balance < 0) {
-      $('#balance').classList.add('has-text-danger')
-      operador = '-'
-    }
-  
-    $('#balance').innerHTML = `${operador}$${Math.abs(balance)}`
-  }
-  
+profitPerCategory (operations, 'comida')
 
 
-  const calcularTotal = () => {
-    let total = 0;
-    for (const product of cart) {
-      total += product.price * product.quantity;
-    }
-    return total;
-  }; */
 
-  /* 1. En la rama de desarrollo hago git merge main para traerme los cambios de main
-2. Luego hago cambios nuevos en la rama de desarrollo, git commit, git push, y si esta todo bien, vuelvo a main
-3. Para en main, hago git merge rama-de-desarrollo
- */
+
+
+
 
   // PENDIENTES
   // no pude aplicar validacion ala fecha
@@ -609,6 +603,10 @@ const formatDate = (day) => {
   // cambiar las categorias a espa;ol cuando hago el print
   // localstorage, se guardan las op en el array pero cuando hago refresh pierdo la info
   // los filtros funcionan pero no se aplican encadenados
+  // Reportes
+
+
+
 
   //estos cierran la funcion window-load
 });
