@@ -4,7 +4,7 @@ window.addEventListener("load", () => {
   // --------------- VARIABLES ---------------
 
   let operations = [];
-  let EditOp = {};
+  
 
   // Regex
   const regExpAlpha = /^[a-zA-Z0-9-\sñáéíóúüª!:?'¡].{4,20}$/;
@@ -26,6 +26,7 @@ window.addEventListener("load", () => {
   const $categTableBody = $("#body-table-categ");
   const $editCateg = $("#edit-categ");
   const $reportSection = $("#report-section");
+  const $filtersContainer = $("#filter-cont");
 
   //buttons
   const $btnNewOp = $("#btn-newop");
@@ -37,6 +38,7 @@ window.addEventListener("load", () => {
   const $btnReport = $("#btn-report");
   const $btnEditCategCancel = $("#editcateg-btn-cancel");
   const $btnEditCategSave = $("#editcateg-btn-save");
+  const $btnHideFilters = $("#hide-filters");
 
   //inputs
   const $descriptionInput = $("#description-input");
@@ -52,7 +54,6 @@ window.addEventListener("load", () => {
   const $editTypeSelect = $("#edit-type-select");
   const $editCategSelect = $("#edit-categ-select");
   const $editDateInput = $("#edit-date-input");
-
   const $editCategNameInput = $("#edit-categ-name");
 
   //filter inputs
@@ -93,6 +94,17 @@ window.addEventListener("load", () => {
     $reportSection.classList.remove("is-hidden");
     $balanceSection.classList.add("is-hidden");
   });
+
+  $btnHideFilters.addEventListener("click", () => {
+    $filtersContainer.classList.toggle("is-hidden");
+    if ($filtersContainer.classList.contains("is-hidden")) {
+      $btnHideFilters.innerText = "Mostrar filtros";
+    } else {
+      $btnHideFilters.innerText = "Ocultar filtros";
+    }
+  });
+
+
 
   // ********************************** BALANCE ********************************** //
 
@@ -139,8 +151,9 @@ window.addEventListener("load", () => {
         console.log("click delete");
         operations = operations.filter((op) => op.id !== event.target.id);
         paint(operations);
+        totalBalance(operations);
         // localStorage.setItem("operations", JSON.stringify(operations));
-        generateOperationTable(JSON.parse(localStorage.getItem("operations")));
+   
       });
     });
 
@@ -199,14 +212,14 @@ window.addEventListener("load", () => {
     $balanceSection.classList.remove("is-hidden");
     $opTable.classList.remove("is-hidden");
     paint(operations);
-
+    totalBalance(operations);
     localStorage.setItem("operations", JSON.stringify(operations));
 
   });
 
   // Balance Function
 
-  const totalSum = (array) => {
+  const totalBalance = (array) => {
     let profitTotal = 0;
     let expenseTotal = 0;
 
@@ -225,70 +238,67 @@ window.addEventListener("load", () => {
 
   //  ------------ FILTERS -------------  //
 
-  // Filter per Type
 
-
-  let opFiltered = [];
-  const filterPerType = () => {
-    //let opFiltered = [];
-    if ($typeFilter.value !== "all") {
-      opFiltered = operations.filter((op) => op.Type === $typeFilter.value);
-      paint(opFiltered);
-    } else {
-      paint(operations);
-    }
-  };
-
-  $typeFilter.addEventListener("input", filterPerType);
-
-  // Filter per Category
-
-  const filterPerCategory = () => {
-    // let opFiltered = [];
-    if ($categoryFilter.value !== "all") {
-      opFiltered = operations.filter(
-        (op) => op.Category === $categoryFilter.value
+  const filter = () => {
+    const filterType = $typeFilter.value;
+    const filterCategory = $categoryFilter.value;
+    const filterOrder = $orderByFilter.value;
+  
+    let operations = JSON.parse(localStorage.getItem("operations"));
+  
+    operations = operations.filter(
+      (op) => op.Date >= $dateFilter.value
+    );
+    if (filterType !== "all") {
+      operations = operations.filter(
+        (op) => op.Type === filterType
       );
-      paint(opFiltered);
-    } else {
-      paint(operations);
     }
+    if (filterCategory !== "all") {
+      operations = operations.filter(
+        (op) => op.Category === filterCategory
+      );
+    }
+    if (filterOrder === "most-recent") {
+      operations = operations.sort(
+        (a, b) => new Date(a.Date) - new Date(b.Date)
+      );
+    }
+    if (filterOrder === "less-recent") {
+      operations = operations.sort(
+        (a, b) => new Date(b.Date) - new Date(a.Date)
+      );
+    }
+    if (filterOrder === "higher-amount") {
+      operations = operations.sort((a, b) => Number(b.Amount) - Number(a.Amount));
+    }
+    if (filterOrder === "lower-amount") {
+      operations = operations.sort((a, b) => Number(a.Amount) - Number(b.Amount));
+    }
+    if (filterOrder === "a-z") {
+      operations = operations.sort((a, b) => {
+        if (a.Description.toLowerCase() < b.Description.toLowerCase()) {
+          return -1;
+        }
+      });
+    }
+    if (filterOrder === "z-a") {
+      operations = operations.sort((a, b) => {
+        if (a.Description.toLowerCase() > b.Description.toLowerCase()) {
+          return -1;
+        }
+      });
+    }
+   paint(operations);
+   totalBalance(operations);
+  
   };
 
-  $categoryFilter.addEventListener("input", filterPerCategory);
 
-
-
-  // Order per Status
-
-  $orderByFilter.addEventListener("input", () => {
-    console.log(operations);
-    let orderAlpha = [...operations];
-
-    if ($orderByFilter.value === "a-z") {
-      orderAlpha.sort(function (a, b) {
-        if (a.Description > b.Description) {
-          return 1;
-        }
-        if (a.Description < b.Description) {
-          return -1;
-        }
-        return 0;
-      });
-      paint(orderAlpha);
-    } else if ($orderByFilter.value === "z-a") {
-      orderAlpha.sort(function (a, b) {
-        if (a.Description < b.Description) {
-          return 1;
-        }
-        if (a.Description > b.Description) {
-          return -1;
-        }
-        return 0;
-      });
-      paint(orderAlpha);
-    }
-  });
+$typeFilter.addEventListener("change", filter);
+$categoryFilter.addEventListener("change", filter);
+$orderByFilter.addEventListener("change", filter);
+$dateFilter.addEventListener("change", filter);
 
  
 
@@ -399,7 +409,8 @@ window.addEventListener("load", () => {
       $opTable.classList.remove("is-hidden");
     }
 
-    totalSum(operations);
+    totalBalance(operations);
+
 
     localStorage.setItem("operations", JSON.stringify(operations));
    
@@ -550,10 +561,7 @@ profitPerCategory (operations, 'comida')
 
   // PENDIENTES
   // no pude aplicar validacion ala fecha
-  // no pude filtrar por fecha
-  // cambiar las categorias a espa;ol cuando hago el print
   // localstorage, se guardan las op en el array pero cuando hago refresh pierdo la info
-  // los filtros funcionan pero no se aplican encadenados
   // Reportes
 
 
